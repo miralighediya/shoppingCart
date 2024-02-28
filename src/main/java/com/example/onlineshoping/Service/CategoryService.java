@@ -16,7 +16,14 @@ public class CategoryService {
 	
 	public category addCategory(category cat)
 	{
-		return categoryRepository.save(cat);
+		category existingCategory = categoryRepository.findByName(cat.getName());
+		if (existingCategory != null) {
+			// Category already exists, return the existing one
+			return existingCategory;
+		} else {
+			// Category doesn't exist, save it to the database
+			return categoryRepository.save(cat);
+		}
 	}
 
 	public  List<category> finadAllElement() 

@@ -16,18 +16,13 @@ import com.example.onlineshoping.Service.ProductService;
 import com.example.onlineshoping.entity.product;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
 	
 	@Autowired
 	private ProductService productservice;
 	
-	@PostMapping("/add")
-	public product addproduct(@RequestBody product prd)
-	{
-		return productservice.addproduct(prd);
-	}
-	
+	//not required
 	@GetMapping("/list")
 	public List<product> getproductHigher()
 	{
@@ -43,10 +38,22 @@ public class ProductController {
 		System.out.println(pr.toString());
 		return pr;
 	}
-	@PutMapping("/update")
-	public product updateproduct(@RequestBody product prd)
+	
+	@PostMapping("/add")
+	public product addproduct(@RequestBody product prd)
 	{
-		return productservice.updateProduct(prd);
+		return productservice.addproduct(prd);
+	}
+	
+	@PutMapping("/update/{id}")
+	public product updateproduct(@PathVariable("id") Long productId, @RequestBody product productDetails)
+	{
+		product updatedProduct = productservice.updateProduct(productId, productDetails);
+		if (updatedProduct != null) {
+			return updatedProduct;
+		} else {
+			return null;
+		}
 	}
 	
 	@DeleteMapping("delete/{id}")
