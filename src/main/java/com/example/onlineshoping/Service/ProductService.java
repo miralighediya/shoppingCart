@@ -15,7 +15,7 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-
+	
 	@Autowired
 	private CategoryService categoryService;
 
@@ -29,6 +29,10 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 
+	public List<product> getProductsByCategoryId(category id) {
+        return productRepository.findBycategory(id);
+    }
+
 	public product getProduct(Long id) {
 		return productRepository.findById(id).get();
 	}
@@ -36,7 +40,7 @@ public class ProductService {
 	public product updateProduct(Long id, product prd) {
 		product existingProduct = productRepository.findById(id).orElse(null);
 		if (existingProduct != null) {
-			
+
 			if (prd.getName() != null) {
 				existingProduct.setName(prd.getName());
 			}
@@ -60,7 +64,7 @@ public class ProductService {
 			}
 			return productRepository.save(existingProduct);
 		}
-		return null; 
+		return null;
 	}
 
 	public void deleteProductById(long id) {

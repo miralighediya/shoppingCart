@@ -13,41 +13,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.onlineshoping.Service.ProductService;
+import com.example.onlineshoping.entity.category;
 import com.example.onlineshoping.entity.product;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-	
+
 	@Autowired
 	private ProductService productservice;
-	
-	//not required
+
+	// not required
 	@GetMapping("/list")
-	public List<product> getproductHigher()
-	{
+	public List<product> getproductHigher() {
 		List<product> prdList = productservice.finadAllElement();
 		System.out.println(prdList.toString());
 		return prdList;
 	}
-	
+
 	@GetMapping("/{id}")
-	public product get(@PathVariable("id")Long id)
-	{
-		product pr =productservice.getProduct(id);
+	public product get(@PathVariable("id") Long id) {
+		product pr = productservice.getProduct(id);
 		System.out.println(pr.toString());
 		return pr;
 	}
-	
+
+	@GetMapping("/category/{category}")
+	public List<product> getProductListByCategory(@PathVariable("category") category categoryId) {
+		List<product> products = productservice.getProductsByCategoryId(categoryId);
+		return products;
+	}
+
 	@PostMapping("/add")
-	public product addproduct(@RequestBody product prd)
-	{
+	public product addproduct(@RequestBody product prd) {
 		return productservice.addproduct(prd);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public product updateproduct(@PathVariable("id") Long productId, @RequestBody product productDetails)
-	{
+	public product updateproduct(@PathVariable("id") Long productId, @RequestBody product productDetails) {
 		product updatedProduct = productservice.updateProduct(productId, productDetails);
 		if (updatedProduct != null) {
 			return updatedProduct;
@@ -55,10 +58,9 @@ public class ProductController {
 			return null;
 		}
 	}
-	
+
 	@DeleteMapping("delete/{id}")
-	public void deleteproductById(@PathVariable int id)
-	{
+	public void deleteproductById(@PathVariable int id) {
 		productservice.deleteProductById(id);
 		System.out.println(" record deleted succefully");
 	}

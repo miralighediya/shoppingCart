@@ -28,7 +28,7 @@ public class product {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private category category;
 	private String brand;
 	private LocalDateTime created_at;
