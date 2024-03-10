@@ -25,8 +25,13 @@ public class cart {
 	private List<CartItems> cartItems = new ArrayList<>();
 
 	@Column(name = "customer_mobile_number")
-	private String customer_mobile_number;
+	private String mobilenumber;
 	private LocalDateTime created_at;
+
+	public void addItem(CartItems cartItem) {
+        cartItems.add(cartItem);
+        cartItem.setCart(this); // Set the owning side of the relationship
+    }
 
 	public int getCart_id() {
 		return cart_id;
@@ -37,11 +42,11 @@ public class cart {
 	}
 
 	public String getCustomer_mobile_number() {
-		return customer_mobile_number;
+		return mobilenumber;
 	}
 
-	public void setCustomer_mobile_number(String customer_mobile_number) {
-		this.customer_mobile_number = customer_mobile_number;
+	public void setCustomer_mobile_number(String mobilenumber) {
+		this.mobilenumber = mobilenumber;
 	}
 
 	public LocalDateTime getCreated_at() {
@@ -54,14 +59,14 @@ public class cart {
 
 	@Override
 	public String toString() {
-		return "cart [cart_id=" + cart_id + ", customer_mobile_number=" + customer_mobile_number + ", created_at="
+		return "cart [cart_id=" + cart_id + ", customer_mobile_number=" + mobilenumber + ", created_at="
 				+ created_at + "]";
 	}
 
 	public cart(int cart_id, String customer_mobile_number, LocalDateTime created_at) {
 		super();
 		this.cart_id = cart_id;
-		this.customer_mobile_number = customer_mobile_number;
+		this.mobilenumber = customer_mobile_number;
 		this.created_at = created_at;
 	}
 
