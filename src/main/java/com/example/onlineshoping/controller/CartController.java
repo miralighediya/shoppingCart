@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.onlineshoping.Service.CartItemService;
 import com.example.onlineshoping.Service.CartService;
 import com.example.onlineshoping.entity.AddToCartRequest;
+import com.example.onlineshoping.entity.CartItems;
 import com.example.onlineshoping.entity.cart;
 
 @RestController
@@ -23,11 +25,9 @@ public class CartController {
 
 	@Autowired
 	private CartService cartService;
-
-	@PostMapping("/add")
-	public cart addcart(@RequestBody cart crt) {
-		return cartService.addcart(crt);
-	}
+	
+	@Autowired
+	private CartItemService cartItemService;
 
 	@PostMapping("/{mobileNumber}/add")
 	public ResponseEntity<String> addToCart(@PathVariable String mobileNumber, @RequestBody AddToCartRequest request) {
@@ -35,29 +35,22 @@ public class CartController {
 		return ResponseEntity.ok("Product added to the cart successfully.");
 	}
 
-	@GetMapping("/list")
-	public List<cart> getcarthigher() {
-		List<cart> crtList = cartService.findAllElement();
+	@GetMapping("/{mobileNumber}")
+	public List<CartItems> getcarthigher() {
+		List<CartItems> crtList = cartItemService.finadAllElement();
 		System.out.println(crtList.toString());
 		return crtList;
 	}
 
-	@PutMapping("/update")
+	@PutMapping("/{mobileNumber}/update")
 	public cart updatecart(@RequestBody cart crt) {
 		return cartService.updatecart(crt);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/clear")
 	public void deletecartById(@PathVariable int id) {
 		cartService.deleteCartById(id);
 		System.out.println("record deleted succefully");
-	}
-
-	@GetMapping("/{id}")
-	public cart get(@PathVariable("id") long id) {
-		cart cr = cartService.getCart(id);
-		System.out.println(cr.toString());
-		return cr;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.example.onlineshoping.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,6 +22,7 @@ public class CartItems {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	private product product_id; // (Foreign Key to Product)
 
 	@ManyToOne(fetch = FetchType.LAZY)
